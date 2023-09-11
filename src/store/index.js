@@ -44,10 +44,10 @@ export default createStore({
     async fetchApiConfig({ commit }) {
       try {
         const config = await fetchApiConfig();
-        commit('setApiConfig', config);
+        commit('setApiConfig', config.apiConfig);
       } catch (error) {
         console.error('API ayarlarını getirme hatası:', error);
-        throw error; // Hata yeniden fırlatılır
+        throw error;
       }
     },
   },

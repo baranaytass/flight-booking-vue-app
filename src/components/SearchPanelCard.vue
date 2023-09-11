@@ -78,7 +78,6 @@ export default {
         ...mapActions(['searchForFlights']),
         async searchFlights() {
             try {
-                // Uçuş arama sorgusu için gerekli verileri hazırlayın
                 const flightSearchOptions = {
                     FromAirportCode: this.departureAirport,
                     ToAirportCode: this.arrivalAirport,
