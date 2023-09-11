@@ -1,30 +1,41 @@
+<script setup>
+import { RouterView } from 'vue-router'
+</script>
+
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div id="app">
+    <router-view></router-view>
+  </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import { mapActions } from 'vuex';
+import { fetchApiConfig } from '@/services/flight.api.js';
 
-nav {
-  padding: 30px;
+export default {
+  name: 'App',
+  beforeCreate() {
+    fetchApiConfig();
+  },
+  methods: {
+    ...mapActions(['fetchApiConfig']), 
+  },
+  async created() {
+    try {
+      await this.$store.dispatch('fetchApiConfig'); 
+      
+      const config = this.$store.state.apiConfig;
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+      console.log('API ayarları:', config);
+    } catch (error) {
+      console.error('API ayarlarını getirme hatası:', error);
     }
-  }
+  },
+};
+</script>
+
+<style>
+body {
+  background-color: rgb(174 211 155 / 34%);
 }
 </style>
